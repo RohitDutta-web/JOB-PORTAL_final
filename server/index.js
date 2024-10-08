@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 //cors configuration-------------------
 const corsOptions = {
-    origin:'http://localhost:5173',//allows req from mentioned localhost
+    origin:['http://localhost:5173', 'https://job-portal-final-1.onrender.com'],//allows req from mentioned localhost
     credentials:true
 }
 
