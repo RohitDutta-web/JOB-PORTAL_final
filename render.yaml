@@ -1,5 +1,0 @@
-service:
-  type: web
-  name: backend
-  env: node
-  script: node server/index.js
