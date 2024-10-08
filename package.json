@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": "https://job-portal-final-1.onrender.com",
   "type": "module",
   "scripts": {
     "dev": "nodemon server/index.js",
