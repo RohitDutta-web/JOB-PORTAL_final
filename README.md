@@ -24,3 +24,9 @@ or you can run - "npm run build" it will download all the dependencies for front
 **Routes ahs been protected for admins or recruiters  
 
 **currently it is implemented that different recruiter cant recuiter for same company , will make it availabe with proper protection and functionality
+
+
+
+
+https://github.com/user-attachments/assets/519a25ee-d990-43e0-b13c-90c780d2e1c0
+
