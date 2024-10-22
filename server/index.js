@@ -8,7 +8,7 @@ import userRoute from "./routes/user.route.js";
 import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
-import path from "path";
+
 //load env variables from .env file
 dotenv.config({});
 
@@ -28,14 +28,13 @@ const corsOptions = {
     origin:['http://localhost:5173', 'https://job-portal-final-1.onrender.com'],//allows req from mentioned localhost
     credentials:true
 }
-
 app.use(cors(corsOptions));
 
 
 //setting port for the server 
 const PORT = process.env.PORT || 3000;
 
-const _dirname = path.resolve();
+
 
 
 // APIs
@@ -45,10 +44,6 @@ app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
 
-app.use(express.static(path.join(_dirname, '/client/dist')))
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"))
-})
 
 
 //start the server and connect to database 

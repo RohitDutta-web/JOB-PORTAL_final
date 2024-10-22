@@ -10,10 +10,10 @@ dotenv.config();
 // Register a new user
 export const register = async (req, res) => {
     try {
-            // Extract user data from the request body
+        // Extract user data from the request body
 
         const { fullname, email, phoneNumber, password, role } = req.body;
-    // Check if all required fields are present
+        // Check if all required fields are present
 
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
@@ -21,7 +21,7 @@ export const register = async (req, res) => {
                 success: false
             });
         };
-          // Check if a file is uploaded
+        // Check if a file is uploaded
         if (!req.file) {
             return res.status(400).json({
                 message: "Please Upload picture",
@@ -31,12 +31,12 @@ export const register = async (req, res) => {
 
 
 
-    // Get the uploaded file and upload it to Cloudinary
+        // Get the uploaded file and upload it to Cloudinary
 
-        const fileUri = getDataUri(req.file) ;
+        const fileUri = getDataUri(req.file);
         let cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
-    // Check if a user with the same email already exists
+        // Check if a user with the same email already exists
 
         const user = await User.findOne({ email });
         if (user) {
@@ -45,11 +45,11 @@ export const register = async (req, res) => {
                 success: false,
             })
         }
-            // Hash the password
+        // Hash the password
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Create a new user
+        // Create a new user
 
         await User.create({
             fullname,
@@ -75,10 +75,10 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-            // Extract user data from the request body
+        // Extract user data from the request body
 
         const { email, password, role } = req.body;
-    // Check if all required fields are present
+        // Check if all required fields are present
 
         if (!email || !password || !role) {
             return res.status(400).json({
@@ -86,7 +86,7 @@ export const login = async (req, res) => {
                 success: false
             });
         };
-            // Find the user by email
+        // Find the user by email
 
         let user = await User.findOne({ email });
         if (!user) {
@@ -95,7 +95,7 @@ export const login = async (req, res) => {
                 success: false,
             })
         }
-            // Compare the provided password with the stored password
+        // Compare the provided password with the stored password
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
@@ -104,8 +104,8 @@ export const login = async (req, res) => {
                 success: false,
             })
         };
-    // Check if the provided role matches the user's role
-    if (role !== user.role) {
+        // Check if the provided role matches the user's role
+        if (role !== user.role) {
             return res.status(400).json({
                 message: "Account doesn't exist with current role.",
                 success: false
@@ -115,8 +115,8 @@ export const login = async (req, res) => {
         const tokenData = {
             userId: user._id
         }
-        const token =  jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
-    // Return the user data and the token
+        const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
+        // Return the user data and the token
 
         user = {
             _id: user._id,
@@ -127,7 +127,7 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'none', domain: 'job-portal-final-1.onrender.com' }).json({
+        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
             message: `Welcome back ${user.fullname}`,
             user,
             success: true
@@ -141,7 +141,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-            // Clear the token cookie
+        // Clear the token cookie
 
         return res.status(200).cookie("token", "", { maxAge: 0 }).json({
             message: "Logged out successfully.",
@@ -156,15 +156,19 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-            // Extract user data from the request body
+        // Extract user data from the request body
 
         const { fullname, email, phoneNumber, bio, skills } = req.body;
-    // Get the uploaded file
-
-        const file = req.file;
-    // Upload the file to Cloudinary
-    const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        // Get the uploaded file
+        let file;
+        let fileUri;
+        let cloudResponse;
+        if (req.file) {
+            file = req.file;
+            // Upload the file to Cloudinary
+            fileUri = getDataUri(file);
+            cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        }
 
 
 
@@ -172,7 +176,7 @@ export const updateProfile = async (req, res) => {
         if (skills) {
             skillsArray = skills.split(",");
         }
-            // Get the user ID from the authentication middleware
+        // Get the user ID from the authentication middleware
 
         const userId = req.id; // middleware authentication
         let user = await User.findById(userId);
@@ -190,7 +194,7 @@ export const updateProfile = async (req, res) => {
         if (bio) user.profile.bio = bio
         if (skills) user.profile.skills = skillsArray
 
-    // Update the resume if a new file is uploaded
+        // Update the resume if a new file is uploaded
         if (cloudResponse) {
             user.profile.resume = cloudResponse.secure_url // save the cloudinary url
             user.profile.resumeOriginalName = file.originalname // Save the original file name
