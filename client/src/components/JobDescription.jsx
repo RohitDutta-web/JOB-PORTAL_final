@@ -78,7 +78,7 @@ const JobDescription = () => {
                 <h1 className='font-bold my-1'>Salary: <span className='pl-4 font-normal text-gray-800'>{singleJob?.salary}LPA</span></h1>
                 <h1 className='font-bold my-1'>Total Applicants: <span className='pl-4 font-normal text-gray-800'>{singleJob?.applications?.length}</span></h1>
                 <h1 className='font-bold my-1'>Posted Date: <span className='pl-4 font-normal text-gray-800'>{singleJob?.createdAt
-                    ? format(parseISO(user.createdAt), 'yyyy-MM-dd')
+                    ? format(parseISO(singleJob?.createdAt), 'yyyy-MM-dd')
                     : "N/A"}</span></h1>
             </div>
         </div>
