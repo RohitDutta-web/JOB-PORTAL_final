@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 //cors configuration-------------------
 const corsOptions = {
-    origin:[process.env.CLIENT_BASED_URL],//allows req from mentioned localhost
+    origin:[process.env.CLIENT_BASED_URL, process.env.DEPLOYED_URL],//allows req from mentioned localhost
     credentials:true
 }
 app.use(cors(corsOptions));
