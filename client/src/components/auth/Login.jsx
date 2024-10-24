@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setUser } from '@/redux/authSlice'
 import { Loader2 } from 'lucide-react'
+import { setToken } from "../../utils/authUtils.js"
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -18,7 +19,7 @@ const Login = () => {
         password: "",
         role: "",
     });
-    const { loading,user } = useSelector(store => store.auth);
+    const { loading, user } = useSelector(store => store.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -38,6 +39,7 @@ const Login = () => {
             });
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
+                setToken(res.data.token); // Store token in local storage
                 navigate("/");
                 toast.success(res.data.message);
             }
@@ -48,11 +50,11 @@ const Login = () => {
             dispatch(setLoading(false));
         }
     }
-    useEffect(()=>{
-        if(user){
+    useEffect(() => {
+        if (user) {
             navigate("/");
         }
-    },[])
+    }, [])
     return (
         <div>
             <Navbar />

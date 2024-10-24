@@ -11,15 +11,20 @@ const isAuthenticated = async (req, res, next) => {
                 success: false,
             })
         }
+       
             // Verify the token using the secret key
 
         const decode = await jwt.verify(token, process.env.SECRET_KEY);
+        
+       
         if(!decode){
             return res.status(401).json({
                 message:"Invalid token",
                 success:false
             })
         };
+
+    
             // If the token is valid, add the user ID to the request object
 
         req.id = decode.userId;

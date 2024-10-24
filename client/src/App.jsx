@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Navbar from './components/shared/Navbar'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Home from './components/Home'
@@ -14,6 +13,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import ProtectedRouteUser from './components/protectedRoute'
 
 
 const appRouter = createBrowserRouter([
@@ -35,7 +35,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/description/:id",
-    element: <JobDescription />
+    element: <ProtectedRouteUser><JobDescription /></ProtectedRouteUser>
   },
   {
     path: "/browse",
@@ -43,32 +43,32 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Profile />
+    element: <ProtectedRouteUser><Profile /></ProtectedRouteUser>
   },
   // admin ke liye yha se start hoga
   {
     path:"/admin/companies",
-    element: <ProtectedRoute><Companies/></ProtectedRoute>
+    element: <ProtectedRouteUser><ProtectedRoute><Companies/></ProtectedRoute></ProtectedRouteUser>
   },
   {
     path:"/admin/companies/create",
-    element: <ProtectedRoute><CompanyCreate/></ProtectedRoute> 
+    element: <ProtectedRouteUser><ProtectedRoute><CompanyCreate/></ProtectedRoute> </ProtectedRouteUser>
   },
   {
     path:"/admin/companies/:id",
-    element:<ProtectedRoute><CompanySetup/></ProtectedRoute> 
+    element: <ProtectedRouteUser><ProtectedRoute><CompanySetup/></ProtectedRoute> </ProtectedRouteUser>
   },
   {
     path:"/admin/jobs",
-    element:<ProtectedRoute><AdminJobs/></ProtectedRoute> 
+    element: <ProtectedRouteUser><ProtectedRoute><AdminJobs/></ProtectedRoute> </ProtectedRouteUser>
   },
   {
     path:"/admin/jobs/create",
-    element:<ProtectedRoute><PostJob/></ProtectedRoute> 
+    element: <ProtectedRouteUser><ProtectedRoute><PostJob/></ProtectedRoute> </ProtectedRouteUser>
   },
   {
     path:"/admin/jobs/:id/applicants",
-    element:<ProtectedRoute><Applicants/></ProtectedRoute> 
+    element: <ProtectedRouteUser><ProtectedRoute><Applicants/></ProtectedRoute> </ProtectedRouteUser>
   },
 
 ])
