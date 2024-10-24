@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 // Define an authentication middleware function
 const isAuthenticated = async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token = localStorage.getItem('Token');
         if (!token) {
             return res.status(401).json({
                 message: "Invalid user",
