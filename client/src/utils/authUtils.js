@@ -1,16 +1,15 @@
 
 
 export const setToken = (token) => {
-  localStorage.setItem('Token', token);
-  document.cookie = `Token=${token}; path=/; max-age=86400; SameSite=Strict`;
+  sessionStorage.setItem('Token', token);
 };
 
 export const getToken = () => {
-  return localStorage.getItem('Token');
+  return sessionStorage.getItem('Token');
 };
 
 export const removeToken = () => {
-  localStorage.removeItem('Token');
+  sessionStorage.removeItem('Token');
 };
 
 export const isAuthenticated = () => {
