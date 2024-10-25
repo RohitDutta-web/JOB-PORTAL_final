@@ -112,7 +112,7 @@ export const login = async (req, res) => {
             })
         };
 
-        const tokenData = user._id
+        const tokenData = { userId: user._id }
 
         const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
         // Return the user data and the token
