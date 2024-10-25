@@ -1,15 +1,15 @@
 
 
 export const setToken = (token) => {
-  sessionStorage.setItem('Token', token);
+  localStorage.setItem('Token', token);
 };
 
 export const getToken = () => {
-  return sessionStorage.getItem('Token');
+  return localStorage.getItem('Token');
 };
 
 export const removeToken = () => {
-  sessionStorage.removeItem('Token');
+  localStorage.removeItem('Token');
 };
 
 export const isAuthenticated = () => {
